@@ -1,6 +1,7 @@
 <body style="height: 100vh; background: #111; text-align: center;">
   <canvas id="c" width="400" height="400"></canvas>
   <script>
+    //Setup
     context = c.getContext("2d");
     
     const bird = new Image();
@@ -15,23 +16,35 @@
     c.onclick = () => (birdDY = 9);
 
     setInterval(() => {
+      
+      //Map creation
       context.fillStyle = "skyblue";
       context.fillRect(0,0,canvasSize,canvasSize); 
       birdY -= birdDY -= 0.5; 
+
       context.drawImage(bird, birdX, birdY, birdSize * (524/374), birdSize); 
       context.fillStyle = "green";
       pipeX -= 8; 
-      pipeX < -pipeWidth && 
-        ((pipeX = canvasSize), (topPipeBottomY = pipeGap * Math.random())); 
+      
+      pipeX < -pipeWidth && ((pipeX = canvasSize), (topPipeBottomY = pipeGap * Math.random())); 
+
       context.fillRect(pipeX, 0, pipeWidth, topPipeBottomY);
       context.fillRect(pipeX, topPipeBottomY + pipeGap, pipeWidth, canvasSize);
+
       context.fillStyle = "black";
-      context.fillText(score++, 9, 25); 
+
+      context.fillText(score++, 9, 25);
+      
       bestScore = bestScore < score ? score : bestScore; 
+
       context.fillText(`Best: ${bestScore}`, 9, 50);
+      
+      //Flappy's behaviour
+
       (((birdY < topPipeBottomY || birdY > topPipeBottomY + pipeGap) && pipeX < birdSize * (524/374))
       || birdY > canvasSize) && 
-      ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0)); 
+      ((birdDY = 0), (birdY = 200), (pipeX = canvasSize), (score = 0));
+      
     }, interval)
   </script>
 </body>
